@@ -70,4 +70,3 @@ void problem_1_1();
 void problem_1_2();
 void problem_1_3();
 void problem_1_4();
-void problem_1_5();

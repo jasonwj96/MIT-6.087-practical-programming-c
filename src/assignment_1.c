@@ -1,12 +1,9 @@
 #include <stdio.h>
 
-
-
 void problem_1_1(){
   const double ans = 10.0 + 2.0 / ((3.0 - 2.0) * 2.0);
   printf("Problem 1.1 - c: %f\n", ans);
 }
-
 
 void problem_1_2() {
 
@@ -37,13 +34,12 @@ void problem_1_2() {
 }
 
 void problem_1_3() {
-
+  printf("Hello, 6.087 students.\n");
 }
 
 void problem_1_4() {
-
-}
-
-void problem_1_5() {
+#define MSG1 "All your base are belong to us!\n"
+  const char msg[] = MSG1;
+  puts(msg);
 
 }
