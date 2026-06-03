@@ -1,1 +1,1 @@
-# MIT-6.102-software-construction
+# MIT-6.087-practical-programminc-C

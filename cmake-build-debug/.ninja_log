@@ -1,0 +1,15 @@
+# ninja log v6
+7	757	8022205597956198	CMakeFiles/main.dir/src/main.c.obj	d585621b214086cc
+3	71	8022205723968880	CMakeFiles/main.dir/src/assignment_1.c.obj	ece3568256fc7abc
+72	166	8022205724670535	main.exe	7f65486c18f64ac2
+2	417	8022206893022753	build.ninja	67d283e83aeec38
+3	70	8022206893371971	CMakeFiles/main.dir/src/assignment_1.c.obj	ece3568256fc7abc
+70	166	8022206894033948	main.exe	7f65486c18f64ac2
+3	98	8022207273698907	CMakeFiles/main.dir/src/assignment_1.c.obj	ece3568256fc7abc
+99	192	8022207274656745	main.exe	7f65486c18f64ac2
+4	65	8022207737990501	CMakeFiles/main.dir/src/assignment_1.c.obj	ece3568256fc7abc
+65	175	8022207738608485	main.exe	7f65486c18f64ac2
+4	70	8022208036500661	CMakeFiles/main.dir/src/assignment_1.c.obj	ece3568256fc7abc
+71	170	8022208037168722	main.exe	7f65486c18f64ac2
+4	71	8022208598193081	CMakeFiles/main.dir/src/assignment_1.c.obj	ece3568256fc7abc
+71	169	8022208598863605	main.exe	7f65486c18f64ac2
