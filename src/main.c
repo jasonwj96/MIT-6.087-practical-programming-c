@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
   //problem_1_2();
   //problem_1_3();
   //problem_1_4();
-  problem_2_1();
-
+  // problem_2_1();
+  // problem_2_2('\n');
   return 0;
 }
