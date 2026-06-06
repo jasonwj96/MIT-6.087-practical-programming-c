@@ -42,3 +42,54 @@ void problem_2_2(char c) {
     printf("white space (includes space,tab,new line).");
   }
 }
+
+void problem_2_3() {
+  const int val = 0xCAFE;
+
+  const int test =
+       ((val & 0x1) != 0) +
+       ((val & 0x2) != 0) +
+       ((val & 0x4) != 0) +
+       ((val & 0x8) != 0) >= 3;
+
+  printf("At least 3 of last 4 bits set: 0x%x\n", test);
+
+  /*
+  AND
+  11001010 11111110  - 0xCAFE
+  00000000 11111111  - 0x00FF
+  ---------------------------
+  00000000 11111110  - 0x00FE
+  ---------------------------
+  << 8
+  11111110 00000000  - 0xFE00
+  ---------------------------
+
+  >> 8
+  11001010 11111110  - 0xCAFE
+  00000000 11001010  - 0x00CA
+
+  ---------------------------
+  OR
+  00000000 11001010  - 0x00CA
+  11111110 00000000  - 0xFE00
+  ---------------------------
+  11111110 11001010  - 0xFECA
+
+  */
+
+  const int reversed = (val & 0x00FF) << 8 | val >> 8;
+  printf("Reverse the byte order: 0x%x\n", reversed);
+
+  const int rotated =  (val >> 4 | val << 12) & 0xFFFF;
+  printf("Rotate 4 bits: 0x%x\n", rotated);
+
+}
+
+void problem_2_4() {
+
+}
+
+void problem_2_5() {
+
+}
