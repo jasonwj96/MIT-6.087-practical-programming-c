@@ -56,5 +56,3 @@ Assume that we want to test if last four bits of x are on. (int MASK=0xF;ison=x&
 void problem_2_1();
 void problem_2_2(char c);
 void problem_2_3();
-void problem_2_4();
-void problem_2_5();

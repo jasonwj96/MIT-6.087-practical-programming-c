@@ -85,11 +85,3 @@ void problem_2_3() {
   printf("Rotate 4 bits: 0x%x\n", rotated);
 
 }
-
-void problem_2_4() {
-
-}
-
-void problem_2_5() {
-
-}
