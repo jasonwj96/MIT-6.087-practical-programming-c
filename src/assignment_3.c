@@ -40,11 +40,10 @@ void problem_3_1() {
   /* end profiling */
 
   /* compute average execution time */
-  favg = (double)(tend - tstart) / CLOCKS_PER_SEC / ntests;
+  favg = (double) (tend - tstart) / CLOCKS_PER_SEC / ntests;
 
   /* print avg execution time in milliseconds */
   printf("Avg. execution time: %g msec\n", favg * 1000);
-
 }
 
 /*
@@ -91,15 +90,15 @@ int sample_geometric_rv(double p) {
   return n;
 }
 
-void problem_3_3(){
+void problem_3_3() {
   printf("Factorial: %d\n", factorial(10));
   printf("Sample geometric Rv: %d", sample_geometric_rv(0.5));
 }
 
 void problem_3_4(int argc, char *argv[]) {
   FILE *fp = NULL;
-  int nfiles = --argc;  /* ignore the name of the program itself */
-  int argidx = 1;       /* ignore the name of the program itself */
+  int nfiles = --argc; /* ignore the name of the program itself */
+  int argidx = 1; /* ignore the name of the program itself */
   char *currfile = "";
   char c;
 
@@ -107,14 +106,15 @@ void problem_3_4(int argc, char *argv[]) {
   unsigned long nw = 0, nl = 0, nc = 0;
 
   if (nfiles == 0) {
-    fp = stdin;  /* standard input */
+    fp = stdin; /* standard input */
     nfiles++;
-  } else {         /* set to first */
+  } else {
+    /* set to first */
     currfile = argv[argidx++];
     fp = fopen(currfile, "r");
   }
 
-  while (nfiles > 0)  /* files left > 0 */
+  while (nfiles > 0) /* files left > 0 */
   {
     if (fp == NULL) {
       fprintf(stderr, "Unable to open input\n");
@@ -124,19 +124,28 @@ void problem_3_4(int argc, char *argv[]) {
     nc = nw = nl = 0;
 
     while ((c = getc(fp)) != EOF) {
-      /* TODO: FILL HERE
-         process the file using getc(fp)
-      */
+      if (c == '\n') {
+        nl++;
+      } else if (c == ' ' || c == '\t') {
+        nw++;
+      } else {
+        nc++;
+      }
     }
 
-    printf("%ld %s\n", nc, currfile);
+    if (nc > 0) {
+      nl++;
+    }
 
-    /* next file if exists */
+    printf("Current file: %s\n", currfile);
+    printf("Character count: %ld\n", nc);
+    printf("Word count: %ld\n", nw);
+    printf("Line count: %ld\n\n", nl);
+
     nfiles--;
     if (nfiles > 0) {
       currfile = argv[argidx++];
       fp = fopen(currfile, "r");
     }
   }
-
 }
