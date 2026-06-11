@@ -1,4 +1,6 @@
 #include "assignment_3.h"
+
+#include <ctype.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
@@ -104,6 +106,7 @@ void problem_3_4(int argc, char *argv[]) {
 
   /* count of words, lines, characters */
   unsigned long nw = 0, nl = 0, nc = 0;
+  int in_word = 0;
 
   if (nfiles == 0) {
     fp = stdin; /* standard input */
@@ -122,20 +125,31 @@ void problem_3_4(int argc, char *argv[]) {
     }
 
     nc = nw = nl = 0;
+    in_word = 0;
 
     while ((c = getc(fp)) != EOF) {
-      if (c == '\n') {
+      nc++;
+
+      if (c == '\n')
         nl++;
-      } else if (c == ' ' || c == '\t') {
-        nw++;
+
+      if (isspace(c)) {
+        if (in_word) {
+          nw++;
+          in_word = 0;
+        }
       } else {
-        nc++;
+        in_word = 1;
       }
     }
 
-    if (nc > 0) {
+    /* count last word if file doesn't end with whitespace */
+    if (in_word)
+      nw++;
+
+    /* count last line if file doesn't end with newline */
+    if (nc > 0 && c != '\n')
       nl++;
-    }
 
     printf("Current file: %s\n", currfile);
     printf("Character count: %ld\n", nc);
