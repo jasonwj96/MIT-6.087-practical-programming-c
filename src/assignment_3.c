@@ -163,3 +163,69 @@ void problem_3_4(int argc, char *argv[]) {
     }
   }
 }
+
+struct StateRecord {
+  int stateOrigin;
+  int countyCodeOrigin;
+  int stateCodeDest;
+  int countyCodeDest;
+  char stateAbbrv[10];
+  char stateName[50];
+  int returnNum;
+  int exmptNum;
+  int aggrAgi;
+};
+
+#define MAX_RECORDS 2700
+
+void problem_3_5(int argc, char *argv[]) {
+  FILE *fp = NULL;
+  char line[512];
+  struct StateRecord records[MAX_RECORDS];
+  int count = 0;
+
+  fp = fopen(argv[1], "r");
+
+  if (fp == NULL) {
+    perror("fopen failed");
+    exit(-1);
+  }
+
+  /* skip header line */
+  fgets(line, sizeof(line), fp);
+
+  /* read each data line into array */
+  while (fgets(line, sizeof(line), fp) != NULL && count < MAX_RECORDS) {
+    const int parsed = sscanf(
+      line,
+      "\"%d\"\t\"%d\"\t\"%d\"\t\"%d\"\t\"%9[^\"]\"\t\"%49[^\"]\"\t%d\t%d\t%d",
+      &records[count].stateOrigin,
+      &records[count].countyCodeOrigin,
+      &records[count].stateCodeDest,
+      &records[count].countyCodeDest,
+      records[count].stateAbbrv,
+      records[count].stateName,
+      &records[count].returnNum,
+      &records[count].exmptNum,
+      &records[count].aggrAgi);
+
+    if (parsed == 9) {
+      count++;
+    }
+  }
+
+  fclose(fp);
+
+  /* print all records */
+  printf("Total records loaded: %d\n\n", count);
+
+  for (int i = 0; i < count; i++) {
+    printf("[%d] %s %s origin=%d dest=%d agi=%d\n",
+           i,
+           records[i].stateAbbrv,
+           records[i].stateName,
+           records[i].stateOrigin,
+           records[i].stateCodeDest,
+           records[i].aggrAgi);
+  }
+}
