@@ -183,6 +183,7 @@ void problem_3_5(int argc, char *argv[]) {
   char line[512];
   struct StateRecord records[MAX_RECORDS];
   int count = 0;
+  long total = 0;
 
   fp = fopen(argv[1], "r");
 
@@ -191,10 +192,8 @@ void problem_3_5(int argc, char *argv[]) {
     exit(-1);
   }
 
-  /* skip header line */
   fgets(line, sizeof(line), fp);
 
-  /* read each data line into array */
   while (fgets(line, sizeof(line), fp) != NULL && count < MAX_RECORDS) {
     const int parsed = sscanf(
       line,
@@ -216,16 +215,27 @@ void problem_3_5(int argc, char *argv[]) {
 
   fclose(fp);
 
-  /* print all records */
-  printf("Total records loaded: %d\n\n", count);
+  /* generate report — Massachusetts (state code 25) outflow */
+  printf("%-20s %10s\n", "STATE", "TOTAL");
+  for (int i = 0; i < 40; i++) {
+    printf("-");
+  }
+
+  printf("\n");
 
   for (int i = 0; i < count; i++) {
-    printf("[%d] %s %s origin=%d dest=%d agi=%d\n",
-           i,
-           records[i].stateAbbrv,
-           records[i].stateName,
-           records[i].stateOrigin,
-           records[i].stateCodeDest,
-           records[i].aggrAgi);
+    if (records[i].stateOrigin == 25 && records[i].stateCodeDest != 25 &&
+        records[i].countyCodeOrigin == 0 && records[i].countyCodeDest == 0) {
+      printf("%-25s %10d\n", records[i].stateName, records[i].aggrAgi);
+      total += records[i].aggrAgi;
+    }
   }
+
+  for (int i = 0; i < 40; i++) {
+    printf("-");
+  }
+
+  printf("\n");
+
+  printf("%-25s %10ld\n", "Total", total);
 }
