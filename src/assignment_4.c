@@ -1,5 +1,9 @@
 #include "assignment_4.h"
 
+#include <stddef.h>
+
+#define array_length(arr) (sizeof(arr) / sizeof((arr)[0]))
+
 /*
 
 void shift_element(unsigned int i) {
@@ -26,4 +30,18 @@ void problem_4_1(int argc, char *argv[]) {
   int p = 5;
 
   shift_element(arr, &p);
+}
+
+void insertion_sort(int arr[], size_t len) {
+  int *p;
+
+  for (p = arr + 1; p < arr + len; p++) {
+    shift_element(arr, p);
+  }
+}
+
+void problem_4_2(void) {
+  int arr[] = {5, 2, 8, 1, 9};
+
+  insertion_sort(arr, array_length(arr));
 }

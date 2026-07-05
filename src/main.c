@@ -15,7 +15,8 @@ int main(int argc, char *argv[]) {
   //problem_3_3();
   //problem_3_4(argc, argv);
   // problem_3_5(argc, argv);
-  problem_4_1(argc, argv);
+  //problem_4_1(argc, argv);
+  problem_4_2();
 
   return 0;
 }
