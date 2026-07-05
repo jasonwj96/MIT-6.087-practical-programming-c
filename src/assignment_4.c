@@ -1,6 +1,7 @@
 #include "assignment_4.h"
 
 #include <stddef.h>
+#include <stdio.h>
 
 #define array_length(arr) (sizeof(arr) / sizeof((arr)[0]))
 
@@ -40,6 +41,64 @@ void insertion_sort(int arr[], size_t len) {
     shift_element(arr, p);
   }
 }
+
+/*
+ *
+char *strtok(char *text, const char *delims) {
+  if (!text)
+    text = pnexttoken;
+
+  find start of token in text
+  text += strspn(text, delims);
+
+  if (*text == '\0')
+    return NULL;
+
+  find end of token in text
+  pnexttoken = text + strcspn(text, delims);
+
+  insert null terminator at end
+  if (*pnexttoken != '\0')
+    *pnexttoken++ = '\0';
+
+  return text;
+}
+
+*/
+
+
+int strpos(const char *str, char ch) {
+  const char *p = str;
+
+  while (*p != '\0') {
+    if (*p == ch)
+      return p - str;
+
+    p++;
+  }
+
+  return -1;
+}
+
+/*
+  In the context of our string tokenizer, the function strspn() computes the index of the
+  first non-delimiter character in our string. Using pointers or array indexing (your choice),
+  implement the strspn() function. In order to locate a character in another string, you may
+  use the function strpos()
+*/
+unsigned int strspn(const char *str, const char *delims) {
+  const char *curr_c = str;
+
+  while (*curr_c != '\0') {
+    if (strpos(delims, *curr_c) == -1)
+      break;
+
+    curr_c++;
+  }
+
+  return curr_c - str;
+}
+
 
 void problem_4_2(void) {
 }
