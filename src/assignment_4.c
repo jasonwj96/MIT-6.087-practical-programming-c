@@ -33,9 +33,7 @@ void problem_4_1(int argc, char *argv[]) {
 }
 
 void insertion_sort(int arr[], size_t len) {
-  int *p;
-
-  for (p = arr + 1; p < arr + len; p++) {
+  for (int *p = arr + 1; p < arr + len; p++) {
     shift_element(arr, p);
   }
 }
