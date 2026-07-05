@@ -26,10 +26,13 @@ void shift_element(const int arr[], int *pElement) {
 }
 
 void problem_4_1(int argc, char *argv[]) {
-  const int arr[] = {0, 1, 3, 7, 4, 2};
+  int arr[] = {0, 1, 3, 7, 4, 2};
   int p = 5;
 
   shift_element(arr, &p);
+
+  int arr2[] = {5, 2, 8, 1, 9};
+  insertion_sort(arr2, array_length(arr2));
 }
 
 void insertion_sort(int arr[], size_t len) {
@@ -39,7 +42,4 @@ void insertion_sort(int arr[], size_t len) {
 }
 
 void problem_4_2(void) {
-  int arr[] = {5, 2, 8, 1, 9};
-
-  insertion_sort(arr, array_length(arr));
 }
