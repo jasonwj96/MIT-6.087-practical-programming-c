@@ -101,4 +101,7 @@ unsigned int strspn(const char *str, const char *delims) {
 
 
 void problem_4_2(void) {
+  const char *str = " . This";
+
+  printf("%d", strspn(" . This", " ."));
 }
