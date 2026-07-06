@@ -11,4 +11,6 @@ int strpos(const char *str, char ch);
 
 unsigned int strspn(const char *str, const char *delims);
 
+unsigned int strcspn(const char *str, const char *delims);
+
 void problem_4_2();

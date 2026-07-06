@@ -99,6 +99,19 @@ unsigned int strspn(const char *str, const char *delims) {
   return curr_c - str;
 }
 
+unsigned int strcspn(const char *str, const char *delims) {
+  const char *curr_c = str;
+
+  while (*curr_c != '\0') {
+    if (strpos(delims, *curr_c) != -1)
+      break;
+
+    curr_c++;
+  }
+
+  return curr_c - str;
+}
+
 
 void problem_4_2(void) {
   const char *str = " . This";
