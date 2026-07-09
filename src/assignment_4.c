@@ -114,7 +114,32 @@ unsigned int strcspn(const char *str, const char *delims) {
 
 
 void problem_4_2(void) {
-  const char *str = " . This";
+  printf("%d\n", strspn(" . This", " ."));
+  printf("%d", strcspn(" . This", " ."));
+}
 
-  printf("%d", strspn(" . This", " ."));
+void shift_element_by_gap(int arr[], unsigned int i, unsigned int gap) {
+  const int temp = arr[i];
+
+  while (i >= gap && arr[i - gap] > temp) {
+    arr[i] = arr[i - gap];
+    i -= gap;
+  }
+
+  arr[i] = temp;
+}
+
+void shell_sort(int arr[], unsigned int len) {
+  for (unsigned int gap = len / 2; gap > 0; gap /= 2) {
+    for (unsigned int i = gap; i < len; i++) {
+      if (arr[i] < arr[i - gap]) {
+        shift_element_by_gap(arr, i, gap);
+      }
+    }
+  }
+}
+
+void problem_4_3(void) {
+  int arr[] = {1, 2, 3, 4, 5};
+  shell_sort(arr, array_length(arr));
 }
