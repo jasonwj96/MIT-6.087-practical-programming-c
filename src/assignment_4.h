@@ -13,4 +13,8 @@ unsigned int strspn(const char *str, const char *delims);
 
 unsigned int strcspn(const char *str, const char *delims);
 
-void problem_4_2();
+void problem_4_2(void);
+
+void shift_element_by_gap(int arr[], unsigned int i, unsigned int gap);
+
+void problem_4_3(void);
