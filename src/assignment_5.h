@@ -4,4 +4,7 @@ struct node;
 
 void display(struct node *head);
 
-void problem_5_1();
+struct node* addback(struct node* head,int data);
+
+void problem_5_1_a();
+void problem_5_1_b();

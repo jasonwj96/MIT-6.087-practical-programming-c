@@ -18,7 +18,8 @@ int main(int argc, char *argv[]) {
   // problem_3_5(argc, argv);
   //problem_4_1(argc, argv);
   //problem_4_2();
-  problem_5_1();
+  //problem_5_1_a();
+  problem_5_1_b();
 
   return 0;
 }
