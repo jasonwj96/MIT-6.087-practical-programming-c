@@ -62,6 +62,39 @@ struct node *find(struct node *head, int data) {
   return NULL;
 }
 
+struct node *makenode(int data, struct node *next) {
+  struct node *n = malloc(sizeof(struct node));
+  n->data = data;
+  n->next = next;
+  return n;
+}
+
+struct node *delnode(struct node *head, struct node *pelement) {
+  if (!head || !pelement) {
+    return head;
+  }
+
+  if (head == pelement) {
+    struct node *temp = head->next;
+    free(head);
+    return temp;
+  }
+
+  struct node *prev = head;
+  struct node *curr = head->next;
+
+  while (curr != NULL) {
+    if (curr == pelement) {
+      prev->next = curr->next;
+      free(curr);
+      return head;
+    }
+    prev = curr;
+    curr = curr->next;
+  }
+
+  return head;
+}
 
 void problem_5_1_a(void) {
   struct node n3 = {30, NULL};
@@ -92,4 +125,13 @@ void problem_5_1_c() {
   } else {
     printf("Node %d not found.", 40);
   }
+}
+
+void problem_5_1_d() {
+  struct node *n3 = makenode(30, NULL);
+  struct node *n2 = makenode(20, n3);
+  struct node *n1 = makenode(10, n2);
+
+  struct node *new = delnode(n1, n2);
+  display(new);
 }

@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
   //problem_4_2();
   //problem_5_1_a();
   //problem_5_1_b();
-  problem_5_1_c();
+  //problem_5_1_c();
+  problem_5_1_d();
   return 0;
 }
