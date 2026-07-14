@@ -96,6 +96,16 @@ struct node *delnode(struct node *head, struct node *pelement) {
   return head;
 }
 
+void freelist(struct node *head) {
+  struct node *curr = head;
+
+  while (curr != NULL) {
+    struct node *next = curr->next;
+    free(curr);
+    curr = next;
+  }
+}
+
 void problem_5_1_a(void) {
   struct node n3 = {30, NULL};
   struct node n2 = {20, &n3};
@@ -134,4 +144,14 @@ void problem_5_1_d() {
 
   struct node *new = delnode(n1, n2);
   display(new);
+}
+
+void problem_5_1_e() {
+  struct node *n3 = makenode(30, NULL);
+  struct node *n2 = makenode(20, n3);
+  struct node *n1 = makenode(10, n2);
+
+  display(n1);
+  freelist(n1);
+  display(n1);
 }
