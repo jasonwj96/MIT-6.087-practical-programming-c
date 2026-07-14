@@ -14,6 +14,8 @@ struct tnode *talloc(int data) {
 
   if (new) {
     new->data = data;
+    new->left = NULL;
+    new->right = NULL;
     return new;
   }
 
