@@ -12,8 +12,10 @@ add_executable(main
         src/assignment_3.h
         src/assignment_4.c
         src/assignment_4.h
-        src/assignment_5.c
-        src/assignment_5.h
+        src/assignment_5_1.c
+        src/assignment_5_1.h
+        src/assignment_5_2.c
+        src/assignment_5_2.h
 )
 
 target_include_directories(main PRIVATE src)

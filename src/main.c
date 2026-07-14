@@ -2,7 +2,10 @@
 #include "assignment_2.h"
 #include "assignment_3.h"
 #include "assignment_4.h"
-#include "assignment_5.h"
+#include "assignment_5_1.h"
+#include "assignment_5_2.h"
+
+
 
 int main(int argc, char *argv[]) {
   //problem_1_1();
@@ -22,7 +25,8 @@ int main(int argc, char *argv[]) {
   //problem_5_1_b();
   //problem_5_1_c();
   //problem_5_1_d();
-  problem_5_1_e();
+  //problem_5_1_e();
+  problem_5_2_a();
 
   return 0;
 }
