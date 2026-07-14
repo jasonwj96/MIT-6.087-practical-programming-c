@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
   //problem_5_1_c();
   //problem_5_1_d();
   //problem_5_1_e();
-  problem_5_2_a();
+  //problem_5_2_a();
 
   return 0;
 }
