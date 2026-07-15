@@ -1,10 +1,3 @@
-/*
- * prob2.c
- *
- *  Created on:
- *      Author:
- */
-
 /* header files */
 #include <stdio.h>
 #include <stdlib.h>
