@@ -50,7 +50,7 @@ char * lookup_word(const char * word);
 #endif
 
 /* main function */
-int main(int argc, char * argv[]) {
+int main2(int argc, char * argv[]) {
 	char word[WORD_MAX], * translation;
 	int len;
 

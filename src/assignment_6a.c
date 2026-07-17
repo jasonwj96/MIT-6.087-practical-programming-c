@@ -281,13 +281,96 @@ struct token_queue expr_to_infix(char *str) {
 /* postcondition: returned queue contains all the tokens, and pqueue_infix should be
    empty */
 struct token_queue infix_to_postfix(struct token_queue *pqueue_infix) {
-  /* TODO: construct postfix-ordered queue from infix-ordered queue;
-     all tokens from infix queue should be added to postfix queue or freed */
+  struct token_queue queue_postfix;
+  p_expr_token stack_top = NULL; /* operator stack */
+  p_expr_token token, top_token;
+  unsigned int cur_prec, top_prec;
+
+  queue_postfix.front = NULL;
+  queue_postfix.back = NULL;
+
+  while ((token = dequeue(pqueue_infix))) {
+    if (token->type == OPERAND) {
+      /* operands go straight to output */
+      enqueue(&queue_postfix, token);
+    } else {
+      /* OPERATOR: pop higher/equal-precedence (left-assoc) operators first */
+      cur_prec = op_precedences[token->value.op_code];
+      while (stack_top && stack_top->type == OPERATOR) {
+        top_prec = op_precedences[stack_top->value.op_code];
+        if (top_prec > cur_prec ||
+            (top_prec == cur_prec && op_associativity[cur_prec] == LEFT)) {
+          top_token = pop(&stack_top);
+          enqueue(&queue_postfix, top_token);
+        } else {
+          break;
+        }
+      }
+      push(&stack_top, token);
+    }
+  }
+
+  /* drain any remaining operators onto the output */
+  while (stack_top) {
+    top_token = pop(&stack_top);
+    enqueue(&queue_postfix, top_token);
+  }
+
+  return queue_postfix;
 }
 
 /* evalutes the postfix expression stored in the queue */
 /* postcondition: returned value is final answer, and pqueue_postfix should be empty */
 double evaluate_postfix(struct token_queue *pqueue_postfix) {
-  /* TODO: process postfix-ordered queue and return final answer;
-     all tokens from postfix-ordered queue is freed */
+  p_expr_token stack_top = NULL; /* operand stack */
+  p_expr_token token, operand_token;
+  double operands[2];
+  double result = 0;
+  unsigned int i, num_operands;
+  union token_value result_value;
+
+  while ((token = dequeue(pqueue_postfix))) {
+    if (token->type == OPERAND) {
+      push(&stack_top, token);
+      continue;
+    }
+
+    /* OPERATOR: pop the operands it needs, in correct left-to-right order */
+    num_operands = op_operands[token->value.op_code];
+    for (i = num_operands; i > 0; --i) {
+      operand_token = pop(&stack_top);
+      operands[i - 1] = operand_token->value.operand;
+      free(operand_token);
+    }
+
+    switch (token->value.op_code) {
+      case ADD:
+        result = operands[0] + operands[1];
+        break;
+      case SUBTRACT:
+        result = operands[0] - operands[1];
+        break;
+      case MULTIPLY:
+        result = operands[0] * operands[1];
+        break;
+      case DIVIDE:
+        result = operands[0] / operands[1];
+        break;
+      case NEGATE:
+        result = -operands[0];
+        break;
+    }
+    free(token); /* operator token consumed */
+
+    /* push the result back as a new operand token */
+    result_value.operand = result;
+    push(&stack_top, new_token(OPERAND, result_value));
+  }
+
+  /* one token should remain: the final answer */
+  token = pop(&stack_top);
+  result = token->value.operand;
+  free(token);
+
+  return result;
 }
