@@ -1,1 +1,1 @@
-# MIT-6.087-practical-programminc-C
+# MIT-6.087-practical-programming-C
