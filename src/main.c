@@ -6,7 +6,7 @@
 #include "assignment_5_2.h"
 #include "assignment_6a_61.h"
 #include "assignment_6a_62.h"
-
+#include "assignment_6b_61.h"
 
 int main(int argc, char *argv[]) {
   //problem_1_1();
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
   //problem_5_1_e();
   //problem_5_2_a();
   //problem_6a_61();
-  problem_6a_62();
-
+  //problem_6a_62();
+  problem_6b_61();
   return 0;
 }
