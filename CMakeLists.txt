@@ -22,6 +22,9 @@ add_executable(main
         src/assignment_6a_62.h
         src/assignment_6b_61.c
         src/assignment_6b_61.h
+        src/assignment_6b_62.c
+        src/assignment_6b_62.h
+        src/hash.h
 )
 
 target_include_directories(main PRIVATE src)
