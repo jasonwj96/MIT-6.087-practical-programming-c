@@ -1,4 +1,4 @@
-#include "assignment_6a.h"
+#include "assignment_6a_61.h"
 
 /*
  * prob1.c
@@ -16,7 +16,7 @@
 
 /* enable (1) or disable (0) parentheses checking in parsing strings */
 /* leave disabled for part (a); enable for part (b) */
-#define PARSE_PARENS 0
+#define PARSE_PARENS 1
 
 /* type of token */
 enum token_type {
@@ -24,7 +24,7 @@ enum token_type {
   OPERATOR, /* operator: +, -, *, / */
 #if PARSE_PARENS
   LPARENS, /* left parentheses ( */
-      RPARENS /* right parentheses ) */
+  RPARENS /* right parentheses ) */
 #endif
 };
 
@@ -100,7 +100,7 @@ double evaluate_postfix(struct token_queue *pqueue_postfix);
 /* handles evaluation process (calls above functions) for expression string str */
 double evaluate(const char *str);
 
-void problem_6_a_a() {
+void problem_6a_61() {
   char input[INPUT_MAX];
   double ans;
   unsigned int len;
@@ -192,23 +192,31 @@ p_expr_token new_token(const enum token_type type, const union token_value value
 /* handles evaluation process (calls above functions) for expression string str */
 /* returns the final answer */
 double evaluate(const char *str) {
-  char *strbuffer; /* mutable buffer for string (modified in calls to strtok()) */
-  double ans; /* answer to return */
+  char *strbuffer;
+  double ans;
   struct token_queue queue_infix, queue_postfix;
+  size_t i, j, len = strlen(str);
 
-  /* copy str into mutable buffer */
-  strbuffer = strcpy((char *) malloc(strlen(str) + 1), str);
+  /* worst case: every char is an operator needing a space before and after */
+  strbuffer = (char *) malloc(len * 3 + 1);
+  for (i = 0, j = 0; i < len; ++i) {
+    switch (str[i]) {
+      case '+': case '-': case '*': case '/': case '(': case ')':
+        strbuffer[j++] = ' ';
+        strbuffer[j++] = str[i];
+        strbuffer[j++] = ' ';
+        break;
+      default:
+        strbuffer[j++] = str[i];
+    }
+  }
+  strbuffer[j] = '\0';
 
-  /* get queue of tokens in infix order from string buffer */
   queue_infix = expr_to_infix(strbuffer);
-
-  /* get queue of tokens in postfix order from infix-ordered queue */
   queue_postfix = infix_to_postfix(&queue_infix);
-
-  /* get answer from postfix-ordered queue */
   ans = evaluate_postfix(&queue_postfix);
 
-  free(strbuffer); /* free memory from heap */
+  free(strbuffer);
   return ans;
 }
 
@@ -239,7 +247,7 @@ struct token_queue expr_to_infix(char *str) {
           if (type == OPERATOR)
             value.op_code = NEGATE; /* unary */
 #if PARSE_PARENS
-				else if (type == LPARENS)
+          else if (type == LPARENS)
             value.op_code = NEGATE; /* unary */
 #endif
           else
@@ -281,41 +289,42 @@ struct token_queue expr_to_infix(char *str) {
 /* postcondition: returned queue contains all the tokens, and pqueue_infix should be
    empty */
 struct token_queue infix_to_postfix(struct token_queue *pqueue_infix) {
+  p_expr_token stack_top = NULL;
   struct token_queue queue_postfix;
-  p_expr_token stack_top = NULL; /* operator stack */
-  p_expr_token token, top_token;
-  unsigned int cur_prec, top_prec;
+  queue_postfix.front = queue_postfix.back = NULL;
 
-  queue_postfix.front = NULL;
-  queue_postfix.back = NULL;
+  for (p_expr_token ptoken = dequeue(pqueue_infix); ptoken; ptoken = dequeue(pqueue_infix)) {
+    switch (ptoken->type) {
+      case OPERAND:
+        enqueue(&queue_postfix, ptoken);
+        break;
+      case OPERATOR:
+        while (stack_top && stack_top->type == OPERATOR &&
+               (op_precedences[stack_top->value.op_code] >
+                op_precedences[ptoken->value.op_code] ||
+                (op_precedences[stack_top->value.op_code] ==
+                 op_precedences[ptoken->value.op_code] &&
+                 op_associativity[op_precedences[ptoken->value.op_code]] == LEFT)))
+          enqueue(&queue_postfix, pop(&stack_top));
+        push(&stack_top, ptoken);
+        break;
+      case LPARENS:
+        push(&stack_top, ptoken);
+        break;
+      case RPARENS:
+        free(ptoken);
 
-  while ((token = dequeue(pqueue_infix))) {
-    if (token->type == OPERAND) {
-      /* operands go straight to output */
-      enqueue(&queue_postfix, token);
-    } else {
-      /* OPERATOR: pop higher/equal-precedence (left-assoc) operators first */
-      cur_prec = op_precedences[token->value.op_code];
-      while (stack_top && stack_top->type == OPERATOR) {
-        top_prec = op_precedences[stack_top->value.op_code];
-        if (top_prec > cur_prec ||
-            (top_prec == cur_prec && op_associativity[cur_prec] == LEFT)) {
-          top_token = pop(&stack_top);
-          enqueue(&queue_postfix, top_token);
-        } else {
-          break;
+        while ((ptoken = pop(&stack_top))) {
+          if (ptoken->type == LPARENS) {
+            free(ptoken);
+            break;
+          }
+          enqueue(&queue_postfix, ptoken);
         }
-      }
-      push(&stack_top, token);
     }
   }
-
-  /* drain any remaining operators onto the output */
-  while (stack_top) {
-    top_token = pop(&stack_top);
-    enqueue(&queue_postfix, top_token);
-  }
-
+  while (stack_top)
+    enqueue(&queue_postfix, pop(&stack_top));
   return queue_postfix;
 }
 
